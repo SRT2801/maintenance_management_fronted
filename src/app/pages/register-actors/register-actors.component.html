@@ -1,0 +1,29 @@
+<div class="card-container">
+  <app-card header="Register a User" subheader="Complete the form below" content="">
+    <div class="form-container">
+      <div class="input-row">
+        <app-float-label inputId="username" inputType="text" inputValue="usernameValue"
+          label="User Name"></app-float-label>
+        <app-float-label inputId="lastname" inputType="text" inputValue="lastnameValue"
+          label="Last Name"></app-float-label>
+      </div>
+      <div class="input-row">
+        <app-float-label inputId="phonenumber" inputType="number" inputValue="phoneNumberValue"
+          label="Phone Number"></app-float-label>
+        <app-float-label inputId="email" inputType="email" inputValue="emailValue" label="Email"></app-float-label>
+      </div>
+      <div class="input-row">
+        <app-float-label inputId="documentnumber" inputType="number" inputValue="documentNumberValue"
+          label="Document Number"></app-float-label>
+        <app-dropdown [options]="documents" (ngModel)="selectedDocuments" optionLabel="name"
+          placeholder="Type Document" />
+      </div>
+      <div class="input-row">
+        <app-dropdown [options]="status" (ngModel)="selectedStatus" optionLabel="status"
+          placeholder="Select a Status"></app-dropdown>
+        <app-dropdown [options]="roles" (ngModel)="selectedRoles" optionLabel="role"
+          placeholder="Select a Role"></app-dropdown>
+      </div>
+    </div>
+  </app-card>
+</div>
