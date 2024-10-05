@@ -12,6 +12,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -35,7 +36,8 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     SidebarModule,
     PanelMenuModule,
-    DropdownModule
+    DropdownModule,
+    HttpClientModule
   ],
   exports: [CardComponent,FloatLabelComponent,SidebarComponent,HeaderComponent, DropdownComponent]
 })

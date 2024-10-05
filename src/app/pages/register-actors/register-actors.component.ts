@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { IRole } from '../../interfaces/IRole';
+import { HttpService } from '../../shared/services/http/http.service';
 interface Document {
   name: string;
 }
@@ -15,6 +17,10 @@ interface State {
   styleUrl: './register-actors.component.css'
 })
 export class RegisterActorsComponent {
+  constructor(private readonly _httpSrv: HttpService) {}
+  public roles!: IRole;
+
+
   value!: string;
   name!: string;
   lastName!: string;
@@ -25,14 +31,14 @@ export class RegisterActorsComponent {
 
   documents!: Document[];
   selectedDocuments!: Document[];
-
-  roles!: Role[];
   selectedRoles!: Role[];
 
   status!: State[]
   selectedStatus!: State[];
 
   ngOnInit() {
+    this.getRoles()
+
     this.documents = [
       { name: 'Cédula de ciudadanía' },
       { name: 'Cédula de extranjería' },
@@ -40,10 +46,10 @@ export class RegisterActorsComponent {
       { name: 'Registro civil' },
     ];
 
-    this.roles = [
+    /* this.roles = [
       { role: 'System Assitant' },
       { role: 'System Auxiliary' },
-    ];
+    ]; */
 
     this.status = [
       { status: 'Active' },
@@ -52,4 +58,16 @@ export class RegisterActorsComponent {
     ];
   }
 
+  protected async getRoles() {
+    this._httpSrv.get<IRole>('roles/').subscribe({
+      next: (data) => {
+        this.roles = data;
+        const roles = this.roles.data;
+        console.log('🚀 ~ HomeComponent ~ getRoles ~ roles:', roles);
+      },
+      error(err) {
+        console.error(err);
+      },
+    });
+  }
 }
