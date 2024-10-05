@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'maintenance_management_system_frontend';
+  sidebarVisible: boolean = false;
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
+  onSidebarVisibleChange(visible: boolean) {
+    this.sidebarVisible = visible;
+  }
+
 }
