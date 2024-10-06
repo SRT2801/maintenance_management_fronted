@@ -20,8 +20,7 @@ interface State {
 export class RegisterActorsComponent {
   constructor(private readonly _httpSrv: HttpService) {}
   public roles!: IRole;
-  public actors!: IActor;
-
+  public actor!: IActor;
 
   value!: string;
   name!: string;
@@ -71,5 +70,12 @@ export class RegisterActorsComponent {
         console.error(err);
       },
     });
+  }
+
+  //Debes pasarle el body, imagino será con lo del form.value quizá, ese sería el body (el json, con el cuerpo del actor, debe ser el de la interfaz)
+  protected async saveActors(body: IActor) {
+    this._httpSrv.post<IActor>('actors/', body).subscribe(res => {
+      console.log(res);
+    })
   }
 }

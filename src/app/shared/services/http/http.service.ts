@@ -14,14 +14,7 @@ export class HttpService {
     return this._httpClient.get<T>(`${this._baseUrl}/${endpoint}`);
   }
 
-
-  /*   async postData(endpoint: string, data: any): Promise<any> {
-    try {
-      const response = await axios.post(`${this.baseUrl}/${endpoint}`, data);
-      return response.data;
-    } catch (error) {
-      console.error('Error en la solicitud POST', error);
-      throw error;
-    }
-  } */
+  public post<T>(endpoint: string, body: any): Observable<T> {
+    return this._httpClient.post<T>(`${this._baseUrl}/${endpoint}`, body);
+  }
 }

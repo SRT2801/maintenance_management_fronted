@@ -14,31 +14,38 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
+const DECLARATIONS = [
+  HeaderComponent,
+  SidebarComponent,
+  CardComponent,
+  FloatLabelComponent,
+  SidebarComponent,
+  DropdownComponent,
+];
 
+const IMPORTS = [
+  CommonModule,
+  CardModule,
+  ButtonModule,
+  FloatLabelModule,
+  InputTextModule,
+  SidebarModule,
+  PanelMenuModule,
+  DropdownModule,
+  HttpClientModule,
+];
 
-
+const EXPORTS = [
+  CardComponent,
+  FloatLabelComponent,
+  SidebarComponent,
+  HeaderComponent,
+  DropdownComponent,
+];
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidebarComponent,
-    CardComponent,
-    FloatLabelComponent,
-    SidebarComponent,
-    DropdownComponent,
-
-  ],
-  imports: [
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    FloatLabelModule,
-    InputTextModule,
-    SidebarModule,
-    PanelMenuModule,
-    DropdownModule,
-    HttpClientModule
-  ],
-  exports: [CardComponent,FloatLabelComponent,SidebarComponent,HeaderComponent, DropdownComponent]
+  declarations: [...DECLARATIONS],
+  imports: [...IMPORTS],
+  exports: [...EXPORTS],
 })
-export class SharedModule { }
+export class SharedModule {}

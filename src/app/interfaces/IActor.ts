@@ -5,6 +5,6 @@ export interface IActor {
   email: string;
   document_number: string;
   document_type: string;
-  status: string;
+  status?: string;
   role: number;
 }
