@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IRole } from '../../interfaces/IRole';
 import { HttpService } from '../../shared/services/http/http.service';
+import { IActor } from '../../interfaces/IActor';
 interface Document {
   name: string;
 }
@@ -19,6 +20,7 @@ interface State {
 export class RegisterActorsComponent {
   constructor(private readonly _httpSrv: HttpService) {}
   public roles!: IRole;
+  public actors!: IActor;
 
 
   value!: string;

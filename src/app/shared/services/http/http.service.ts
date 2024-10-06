@@ -14,6 +14,7 @@ export class HttpService {
     return this._httpClient.get<T>(`${this._baseUrl}/${endpoint}`);
   }
 
+
   /*   async postData(endpoint: string, data: any): Promise<any> {
     try {
       const response = await axios.post(`${this.baseUrl}/${endpoint}`, data);
