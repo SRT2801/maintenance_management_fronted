@@ -1,29 +1,35 @@
 <div class="card-container">
-  <app-card header="Register a User" subheader="Complete the form below" content="">
-    <div class="form-container">
-      <div class="input-row">
-        <app-float-label inputId="username" inputType="text" inputValue="usernameValue"
-          label="User Name"></app-float-label>
-        <app-float-label inputId="lastname" inputType="text" inputValue="lastnameValue"
-          label="Last Name"></app-float-label>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <app-card header="Register a User" subheader="Complete the form below" content="">
+      <div class="form-container">
+        <div class="input-row">
+          <app-input [control]="nameControl" label="Name">
+          </app-input>
+          <app-input [control]="lastNameControl" label="Last Name">
+          </app-input>
+        </div>
+        <div class="input-row">
+          <app-input [control]="phoneControl" label="Phone Number">
+          </app-input>
+          <app-input [control]="emailControl" label="Email">
+          </app-input>
+        </div>
+        <div class="input-row">
+          <app-input [control]="documentNumberControl" label="Document Number">
+          </app-input>
+          <app-dropdown [options]="documents" formControlName="document_type" optionLabel="name"
+          placeholder="Type Document">
+        </app-dropdown>
+        </div>
+        <div class="input-row">
+          <app-dropdown [options]="status" formControlName="status" optionLabel="status" placeholder="Select a Status">
+          </app-dropdown>
+
+          <app-dropdown [options]="selectedRoles" formControlName="role" optionLabel="name" placeholder="Select a Role">
+          </app-dropdown>
+        </div>
+        <app-button text="Register"></app-button>
       </div>
-      <div class="input-row">
-        <app-float-label inputId="phonenumber" inputType="number" inputValue="phoneNumberValue"
-          label="Phone Number"></app-float-label>
-        <app-float-label inputId="email" inputType="email" inputValue="emailValue" label="Email"></app-float-label>
-      </div>
-      <div class="input-row">
-        <app-float-label inputId="documentnumber" inputType="number" inputValue="documentNumberValue"
-          label="Document Number"></app-float-label>
-        <app-dropdown [options]="documents" (ngModel)="selectedDocuments" optionLabel="name"
-          placeholder="Type Document" />
-      </div>
-      <div class="input-row">
-        <app-dropdown [options]="status" (ngModel)="selectedStatus" optionLabel="status"
-          placeholder="Select a Status"></app-dropdown>
-        <!-- <app-dropdown [options]="roles" (ngModel)="selectedRoles" optionLabel="role"
-          placeholder="Select a Role"></app-dropdown> -->
-      </div>
-    </div>
-  </app-card>
+    </app-card>
+  </form>
 </div>
