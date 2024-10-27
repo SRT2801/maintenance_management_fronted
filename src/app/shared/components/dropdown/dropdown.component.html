@@ -1,4 +1,9 @@
-<div class="dropdown-container">
-  <p-dropdown [options]="options" (ngModel)="selectedOption" [optionLabel]="optionLabel" [placeholder]="placeholder">
+<div class="inputGroup">
+  <p-dropdown
+    [options]="options"
+    [optionLabel]="optionLabel"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (onChange)="onSelectChange($event)">
   </p-dropdown>
 </div>
