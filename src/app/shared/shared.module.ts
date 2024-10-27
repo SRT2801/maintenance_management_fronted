@@ -7,20 +7,27 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelComponent } from './components/float-label/float-label.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { RegisterActorsComponent } from '../pages/register-actors/register-actors.component';
+import { InputComponent } from './components/input/input.component';
+import { ButtonComponent } from './components/button/button.component';
 
 const DECLARATIONS = [
   HeaderComponent,
   SidebarComponent,
   CardComponent,
-  FloatLabelComponent,
   SidebarComponent,
   DropdownComponent,
+  RegisterActorsComponent,
+  InputComponent,
+  ButtonComponent
 ];
 
 const IMPORTS = [
@@ -33,18 +40,24 @@ const IMPORTS = [
   PanelMenuModule,
   DropdownModule,
   HttpClientModule,
+  FormsModule,
+  ReactiveFormsModule,
+  BrowserModule,
+  BrowserAnimationsModule,
+
 ];
 
 const EXPORTS = [
   CardComponent,
-  FloatLabelComponent,
   SidebarComponent,
   HeaderComponent,
   DropdownComponent,
+  InputComponent,
+  ButtonComponent
 ];
 
 @NgModule({
-  declarations: [...DECLARATIONS],
+  declarations: [...DECLARATIONS, InputComponent, ButtonComponent],
   imports: [...IMPORTS],
   exports: [...EXPORTS],
 })
