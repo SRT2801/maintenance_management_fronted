@@ -1,10 +1,13 @@
+import { IDepartment } from "./IDepartment";
+
 export interface IActor {
   name: string;
-  last_name: string;
-  phone_number: string;
+  lastName: string;
+  phoneNumber: string;
   email: string;
-  document_number: string;
-  document_type: string;
+  documentNumber: string;
+  documentType: string;
   status?: string;
   role: number;
+  department: IDepartment
 }
