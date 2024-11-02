@@ -1,35 +1,195 @@
+/* Contenedor principal */
 .card-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-
+  align-items: flex-start;
+  padding: 2.5rem;
+  min-height: calc(100vh - 60px);
+  background: linear-gradient(to bottom right, #f8faff, #eef2ff);
+  position: relative;
 }
 
+/* Contenedor del formulario */
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-
+  gap: 0.5rem;
+  padding: 1.8rem;
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
+/* Borde superior decorativo */
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #6366f1, #8b5cf6);
+}
+
+/* Filas de inputs */
 .input-row {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
-
-
-input:focus {
-  border-color: #007bff;
-  outline: none;
+.input-row > * {
+  flex: 1;
+  min-width: 0; /* Previene el desbordamiento */
 }
 
-.p-card {
-  width: auto;
-  max-width: 100%;
+/* Estilos para los componentes de entrada */
+::ng-deep {
+  /* Inputs y Dropdowns */
+  .p-inputtext,
+  .p-dropdown {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    color: #1e293b;
+    height: auto;
+  }
 
+  /* Estados hover */
+  .p-inputtext:hover:not(:disabled),
+  .p-dropdown:hover:not(:disabled) {
+    border-color: #94a3b8;
+  }
 
+  /* Estados focus */
+  .p-inputtext:focus,
+  .p-dropdown.p-focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  }
+
+  /* Dropdown específico */
+  .p-dropdown {
+    display: flex;
+    align-items: center;
+  }
+
+  .p-dropdown-label {
+    padding-right: 2rem;
+  }
+
+  /* Panel del dropdown */
+  .p-dropdown-panel {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 4px;
+  }
+
+  .p-dropdown-items {
+    padding: 0.5rem 0;
+  }
+
+  .p-dropdown-item {
+    padding: 0.75rem 1rem;
+    color: #1e293b;
+    transition: background-color 0.2s;
+  }
+
+  .p-dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #6366f1;
+  }
+
+  /* Labels */
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  /* Botón */
+  app-button button {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(to right, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+  }
+
+  app-button button:hover:not(:disabled) {
+    background: linear-gradient(to right, #4f46e5, #7c3aed);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  }
+
+  app-button button:active {
+    transform: translateY(1px);
+  }
+
+  /* Estados de error */
+  .ng-invalid.ng-touched .p-inputtext,
+  .ng-invalid.ng-touched .p-dropdown {
+    border-color: #ef4444;
+  }
+
+  .error-message {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+  .card-container {
+    padding: 1rem;
+  }
+
+  .form-container {
+    padding: 1.5rem;
+  }
+
+  .input-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .input-row > * {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .p-dropdown,
+    .p-inputtext {
+      font-size: 16px; /* Previene el zoom en iOS */
+    }
+  }
+}
+
+/* Ajustes de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

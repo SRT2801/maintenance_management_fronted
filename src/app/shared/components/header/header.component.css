@@ -9,11 +9,16 @@
   background-color: white;
   border-bottom: 1px solid #ccc;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Coloca el header en el frente */
 }
 
 .header-title {
   font-size: 20px;
   font-weight: bold;
   margin-left: 20px;
+  flex-grow: 1;
 }
 
+body {
+  margin-top: 60px; /* Deja espacio para el header */
+}

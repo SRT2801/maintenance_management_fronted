@@ -18,6 +18,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RegisterActorsComponent } from '../pages/register-actors/register-actors.component';
 import { InputComponent } from './components/input/input.component';
 import { ButtonComponent } from './components/button/button.component';
+import { DepartmentComponent } from '../pages/department/department.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
+import { RequestComponent } from '../pages/request/request.component';
+
+
+
 
 const DECLARATIONS = [
   HeaderComponent,
@@ -27,7 +39,14 @@ const DECLARATIONS = [
   DropdownComponent,
   RegisterActorsComponent,
   InputComponent,
-  ButtonComponent
+  ButtonComponent,
+  DepartmentComponent,
+  LoadingSpinnerComponent,
+  RequestComponent
+
+
+
+
 ];
 
 const IMPORTS = [
@@ -44,6 +63,12 @@ const IMPORTS = [
   ReactiveFormsModule,
   BrowserModule,
   BrowserAnimationsModule,
+  MatProgressSpinnerModule,
+  ProgressSpinnerModule,
+  ToastModule,
+  RippleModule,
+  MatSnackBarModule
+
 
 ];
 
@@ -53,12 +78,16 @@ const EXPORTS = [
   HeaderComponent,
   DropdownComponent,
   InputComponent,
-  ButtonComponent
+  ButtonComponent,
+
+
+
 ];
 
 @NgModule({
   declarations: [...DECLARATIONS, InputComponent, ButtonComponent],
   imports: [...IMPORTS],
   exports: [...EXPORTS],
+  providers: [MessageService]
 })
 export class SharedModule {}

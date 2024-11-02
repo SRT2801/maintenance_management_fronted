@@ -1,4 +1,13 @@
-.inputGroup input {
+.inputGroup {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 1em 0;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+.inputGroup input,
+.inputGroup .p-dropdown {
   font-size: 100%;
   padding: 0.8em;
   outline: none;

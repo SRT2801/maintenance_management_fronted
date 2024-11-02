@@ -1,0 +1,63 @@
+<div class="departments-container">
+  <ng-container *ngIf="!loading && !error; else loadingTpl">
+    <div *ngIf="selectedDepartments && selectedDepartments.length > 0; else noDepartments">
+      <div class="department-card" *ngFor="let department of selectedDepartments">
+        <div class="card-content">
+          <div class="department-header">
+            <h3>{{ department.name }}</h3>
+            <span class="status-badge" [ngClass]="department.status">{{ department.status }}</span>
+          </div>
+          <div class="department-info">
+            <div class="info-group">
+              <label>Description:</label>
+              <p>{{ department.description }}</p>
+            </div>
+            <div class="info-group">
+              <label>Phone:</label>
+              <p>{{ department.phoneNumber }}</p>
+            </div>
+            <div class="coordinator-info">
+              <h4>Coordinator</h4>
+              <div class="info-group">
+                <label>Name:</label>
+                <p>{{ department.coordinator.name }} {{ department.coordinator.lastName }}</p>
+              </div>
+              <div class="info-group">
+                <label>Email:</label>
+                <p>{{ department.coordinator.email }}</p>
+              </div>
+              <div class="info-group">
+                <label>Phone:</label>
+                <p>{{ department.coordinator.phoneNumber }}</p>
+              </div>
+              <div class="info-group">
+                <label>Document Type:</label>
+                <p>{{ department.coordinator.documentType }} </p>
+              </div>
+              <div class="info-group">
+                <label>Document Number:</label>
+                <p>{{ department.coordinator.documentNumber }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noDepartments>
+      <div class="no-data">
+        <p>No departments available.</p>
+      </div>
+    </ng-template>
+  </ng-container>
+  <ng-template #loadingTpl>
+    <div class="message-container">
+      <div *ngIf="loading" class="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Loading departments...</p>
+      </div>
+      <div *ngIf="error" class="error">
+        <p>Error loading departments</p>
+      </div>
+    </div>
+  </ng-template>
+</div>

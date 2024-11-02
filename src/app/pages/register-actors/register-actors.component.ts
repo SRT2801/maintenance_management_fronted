@@ -1,28 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IRole, Role } from '../../interfaces/IRole';
 import { HttpService } from '../../shared/services/http/http.service';
 import { IActor } from '../../interfaces/IActor';
 import { DocumentType } from '../../enums/actor/DocumentType';
 import { Status } from '../../enums/actor/Status';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastService } from '../../shared/services/toast/toast.service';
+
+import { Department, IDepartment } from '../../interfaces/IDepartment';
+
 interface Document {
   name: string;
 }
 
-
 interface State {
   status: string;
 }
+
 @Component({
   selector: 'app-register-actors',
   templateUrl: './register-actors.component.html',
-  styleUrl: './register-actors.component.css',
+  styleUrls: ['./register-actors.component.css'],
 })
 export class RegisterActorsComponent {
-  constructor(private readonly _httpSrv: HttpService) {}
   public roles!: IRole;
   public actor!: IActor;
+
   public registerForm!: FormGroup;
+  public departments!: IDepartment;
+  selectedDepartments!: Department[];
+  loading = true;
+  error = false;
+  isLoading = false;
+
+  documents!: Document[];
+  selectedDocuments!: Document[];
+  selectedRoles!: Role[];
+
+
+
+  status!: State[];
+
+  constructor(
+    private readonly _httpSrv: HttpService,
+    private readonly _toastSrv: ToastService
+  ) {}
 
   get nameControl() {
     return this.registerForm.get('name') as FormControl;
@@ -43,36 +65,28 @@ export class RegisterActorsComponent {
   get documentNumberControl() {
     return this.registerForm.get('document_number') as FormControl;
   }
-  value!: string;
-
-  documents!: Document[];
-  selectedDocuments!: Document[];
-  selectedRoles!: Role[];
-
-  status!: State[];
-  selectedStatus!: State[];
 
   ngOnInit() {
     this.getRoles();
+    this.getDepartments();
+
 
     this.registerForm = new FormGroup({
       name: new FormControl('', Validators.required),
       last_name: new FormControl('', Validators.required),
       phone_number: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\d{10}$/)
+        Validators.pattern(/^\d{10}$/),
       ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email
-      ]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       document_number: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\d+$/)
+        Validators.pattern(/^\d+$/),
       ]),
       document_type: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required),
       role: new FormControl('', Validators.required),
+      department: new FormControl('',Validators.required)
     });
 
     this.documents = [
@@ -82,16 +96,22 @@ export class RegisterActorsComponent {
       { name: DocumentType.RC },
     ];
 
-    /* this.roles = [
-      { role: 'System Assitant' },
-      { role: 'System Auxiliary' },
-    ]; */
-
     this.status = [
       { status: Status.ACTIVE },
       { status: Status.INACTIVE },
       { status: Status.SUSPENDED },
     ];
+
+     this.selectedDepartments = [
+      {
+        id:1 ,
+        name: '',
+        description: '',
+        phoneNumber: '',
+        coordinator: this.actor
+      }
+    ]
+
   }
 
   protected async getRoles() {
@@ -105,40 +125,84 @@ export class RegisterActorsComponent {
         console.error('Error al obtener roles:', err);
       },
     });
-  }
 
+  }
 
   onSubmit() {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.value;
-      console.log('Formulario válido:', formValue);
-
       const actor: IActor = {
         name: formValue.name,
-        last_name: formValue.last_name,
-        phone_number: formValue.phone_number,
+        lastName: formValue.last_name,
+        phoneNumber: formValue.phone_number,
         email: formValue.email,
-        document_number: formValue.document_number,
-        document_type: formValue.document_type.name,
+        documentNumber: formValue.document_number,
+        documentType: formValue.document_type.name,
         status: formValue.status.status,
-        role: formValue.role.id
+        role: formValue.role.id,
+        department: formValue.department.id
       };
+
+
 
       this.saveActors(actor);
     } else {
       console.error('El formulario es inválido:', this.registerForm.errors);
+      this._toastSrv.showToast(
+        'Por favor, complete todos los campos requeridos.'
+      );
     }
   }
 
-  //Debes pasarle el body, imagino será con lo del form.value quizá, ese sería el body (el json, con el cuerpo del actor, debe ser el de la interfaz)
   protected async saveActors(body: IActor) {
-  this._httpSrv.post<IActor>('actors/', body).subscribe({
-    next: (res) => {
-      console.log('Actor registrado exitosamente:', res);
-    },
-    error: (err) => {
-      console.error('Error al registrar actor:', err.error);
-    },
-  });
-}
+    this.isLoading = true;
+
+    const loadingDuration = 2000;
+    const startLoadingTime = Date.now();
+
+    this._httpSrv.post<IActor>('actors/', body).subscribe({
+      next: (res) => {
+        console.log('Actor registrado exitosamente:', res);
+        this.registerForm.reset();
+      },
+      error: (err) => {
+        console.error('Error al registrar actor:', err.error);
+        this._toastSrv.showToast('Error al registrar');
+        this.isLoading = false;
+      },
+      complete: () => {
+        const elapsedTime = Date.now() - startLoadingTime;
+        const remainingTime = loadingDuration - elapsedTime;
+
+        if (remainingTime > 0) {
+          setTimeout(() => {
+            this.isLoading = false;
+            this._toastSrv.showToast('Registro exitoso');
+          }, remainingTime);
+        } else {
+          this.isLoading = false;
+          this._toastSrv.showToast('Registro exitoso');
+        }
+      },
+    });
+  }
+  protected async getDepartments() {
+    this.loading = true;
+
+
+    this._httpSrv.get<IDepartment>('departments/').subscribe({
+      next: (data) => {
+        this.departments = data;
+        this.selectedDepartments = this.departments.data;
+        this.loading = false;
+        console.log('Departamentos cargados:', this.selectedDepartments);
+      },
+      error: (err) => {
+        console.error('Error cargando departamentos:', err);
+        this.error = true;
+        this.loading = false;
+      },
+    });
+  }
+
 }
