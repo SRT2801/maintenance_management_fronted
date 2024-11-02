@@ -54,42 +54,38 @@ export class SidebarComponent {
                 }
             ]
         },
+
         {
-            label: 'Cloud',
-            icon: 'pi pi-cloud',
-            items: [
-                {
-                    label: 'Upload',
-                    icon: 'pi pi-cloud-upload'
-                },
-                {
-                    label: 'Download',
-                    icon: 'pi pi-cloud-download'
-                },
-                {
-                    label: 'Sync',
-                    icon: 'pi pi-refresh'
-                }
-            ]
-        },
-        {
-            label: 'Devices',
-            icon: 'pi pi-desktop',
-            items: [
-                {
-                    label: 'Phone',
-                    icon: 'pi pi-mobile'
-                },
-                {
-                    label: 'Desktop',
-                    icon: 'pi pi-desktop'
-                },
-                {
-                    label: 'Tablet',
-                    icon: 'pi pi-tablet'
-                }
-            ]
-        }
+          label: 'Departments',
+          icon: 'pi pi-building-columns',
+          items: [
+
+              {
+                  label: 'View Deparments',
+                  items: [
+                      {
+                          label: 'All Departments',
+                          icon: 'pi pi-home',
+                          command: () => this.navigateTo('/department')
+                      }
+                  ]
+              }
+          ]
+      },
+
+      {
+        label: 'Request',
+        icon: 'pi pi-file-edit',
+        items: [
+
+            {
+                label: 'Create Request',
+                icon: '',
+                command: () => this.navigateTo('request')
+            }
+        ]
+    },
+
     ]
 }
 
