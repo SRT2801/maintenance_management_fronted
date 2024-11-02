@@ -1,0 +1,20 @@
+<div class="card-container">
+  <form [formGroup]="requestForm">
+    <div class="form-container">
+      <h1>Create a Request</h1>
+      <span>Complete the Form</span>
+      <div class="input-row">
+        <app-input [control]="nameControl" label="Title"></app-input>
+      </div>
+      <div class="input-row">
+        <app-input [control]="descriptionControl" label="Description"></app-input>
+      </div>
+      <!-- <div class="input-row">
+        <app-dropdown [options]="selectedDepartments" formControlName="department" optionLabel="name" placeholder="Select a Department"></app-dropdown>
+      </div> -->
+      <app-button (buttonClick)="onSubmit()" text="Register"></app-button>
+    </div>
+  </form>
+
+  <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>
+</div>
