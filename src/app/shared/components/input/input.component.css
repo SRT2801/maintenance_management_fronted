@@ -1,8 +1,9 @@
 /* From Uiverse.io by Maximinodotpy */
 .inputGroup {
   font-family: 'Segoe UI', sans-serif;
-  margin: 1em 0 1em 0;
-  max-width: 190px;
+  margin: 1em 0;
+  width: 100%;
+  max-width: 100%;
   position: relative;
 }
 
@@ -15,6 +16,7 @@
   border-radius: 20px;
   width: 100%;
 }
+
 
 .inputGroup label {
   font-size: 100%;
