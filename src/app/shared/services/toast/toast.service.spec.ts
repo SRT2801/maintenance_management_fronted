@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ToastService } from './toast.service';
+import { Toast2Service } from './toast.service';
 
-describe('ToastService', () => {
-  let service: ToastService;
+describe('Toast2Service', () => {
+  let service: Toast2Service;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ToastService);
+    service = TestBed.inject(Toast2Service);
   });
 
   it('should be created', () => {
