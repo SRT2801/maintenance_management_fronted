@@ -1,6 +1,6 @@
 /* From Uiverse.io by Maximinodotpy */
 .inputGroup {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   margin: 1em 0;
   width: 100%;
   max-width: 100%;
@@ -17,7 +17,6 @@
   width: 100%;
 }
 
-
 .inputGroup label {
   font-size: 100%;
   position: absolute;
@@ -29,8 +28,8 @@
   color: rgb(100, 100, 100);
 }
 
-.inputGroup :is(input:focus, input:valid)~label {
-  transform: translateY(-50%) scale(.9);
+.inputGroup :is(input:focus, input:valid) ~ label {
+  transform: translateY(-50%) scale(0.9);
   margin: 0em;
   margin-left: 1.3em;
   padding: 0.4em;

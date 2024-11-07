@@ -5,16 +5,16 @@
       <span>Complete the Form</span>
       <div class="input-row">
         <app-input [control]="nameControl" label="Title"></app-input>
-      </div>
-      <div class="input-row">
         <app-input [control]="descriptionControl" label="Description"></app-input>
       </div>
-      <!-- <div class="input-row">
-        <app-dropdown [options]="selectedDepartments" formControlName="department" optionLabel="name" placeholder="Select a Department"></app-dropdown>
-      </div> -->
-      <app-button (buttonClick)="onSubmit()" text="Register"></app-button>
+      <div class="input-row">
+        <app-dropdown [options]="selectedDepartments" formControlName="department" optionLabel="name"
+          placeholder="Select a Department"></app-dropdown>
+        <app-dropdown [options]="selectedMaintType" formControlName="typeMaintenance" optionLabel="name"
+          placeholder=" Maintenance Type"></app-dropdown>
+      </div>
+      <app-button (buttonClick)="onSubmit()" text="Create Request"></app-button>
     </div>
   </form>
-
   <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>
 </div>

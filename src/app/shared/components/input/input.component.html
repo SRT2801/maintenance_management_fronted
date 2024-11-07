@@ -1,9 +1,4 @@
-
 <div class="inputGroup">
-  <input
-    [ngModel]="control.value"
-    (ngModelChange)="control.setValue($event)"
-    required
-    autocomplete="on" />
+  <input [ngModel]="control.value" (ngModelChange)="control.setValue($event)" required autocomplete="on" />
   <label>{{ label }}</label>
 </div>

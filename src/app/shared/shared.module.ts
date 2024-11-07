@@ -29,8 +29,6 @@ import { RippleModule } from 'primeng/ripple';
 import { RequestComponent } from '../pages/request/request.component';
 
 
-
-
 const DECLARATIONS = [
   HeaderComponent,
   SidebarComponent,
@@ -42,10 +40,7 @@ const DECLARATIONS = [
   ButtonComponent,
   DepartmentComponent,
   LoadingSpinnerComponent,
-  RequestComponent
-
-
-
+  RequestComponent,
 
 ];
 
@@ -67,9 +62,9 @@ const IMPORTS = [
   ProgressSpinnerModule,
   ToastModule,
   RippleModule,
-  MatSnackBarModule
-
-
+  MatSnackBarModule,
+  InputTextModule,
+  ToastModule
 ];
 
 const EXPORTS = [
@@ -79,15 +74,14 @@ const EXPORTS = [
   DropdownComponent,
   InputComponent,
   ButtonComponent,
-
-
+  ToastModule
 
 ];
 
 @NgModule({
-  declarations: [...DECLARATIONS, InputComponent, ButtonComponent],
+  declarations: [...DECLARATIONS],
   imports: [...IMPORTS],
   exports: [...EXPORTS],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class SharedModule {}

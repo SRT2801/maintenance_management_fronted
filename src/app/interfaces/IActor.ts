@@ -1,4 +1,4 @@
-import { IDepartment } from "./IDepartment";
+import { IDepartment } from './IDepartment';
 
 export interface IActor {
   name: string;
@@ -9,5 +9,5 @@ export interface IActor {
   documentType: string;
   status?: string;
   role: number;
-  department: IDepartment
+  department: IDepartment;
 }

@@ -5,9 +5,8 @@ import { IActor } from '../../interfaces/IActor';
 import { DocumentType } from '../../enums/actor/DocumentType';
 import { Status } from '../../enums/actor/Status';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastService } from '../../shared/services/toast/toast.service';
-
 import { Department, IDepartment } from '../../interfaces/IDepartment';
+import { ToastService } from '../../shared/services/toast/toast.service';
 
 interface Document {
   name: string;
@@ -36,8 +35,6 @@ export class RegisterActorsComponent {
   documents!: Document[];
   selectedDocuments!: Document[];
   selectedRoles!: Role[];
-
-
 
   status!: State[];
 
@@ -70,7 +67,6 @@ export class RegisterActorsComponent {
     this.getRoles();
     this.getDepartments();
 
-
     this.registerForm = new FormGroup({
       name: new FormControl('', Validators.required),
       last_name: new FormControl('', Validators.required),
@@ -86,7 +82,7 @@ export class RegisterActorsComponent {
       document_type: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required),
       role: new FormControl('', Validators.required),
-      department: new FormControl('',Validators.required)
+      department: new FormControl('', Validators.required),
     });
 
     this.documents = [
@@ -102,16 +98,15 @@ export class RegisterActorsComponent {
       { status: Status.SUSPENDED },
     ];
 
-     this.selectedDepartments = [
+    this.selectedDepartments = [
       {
-        id:1 ,
+        id: 1,
         name: '',
         description: '',
         phoneNumber: '',
-        coordinator: this.actor
-      }
-    ]
-
+        coordinator: this.actor,
+      },
+    ];
   }
 
   protected async getRoles() {
@@ -125,7 +120,6 @@ export class RegisterActorsComponent {
         console.error('Error al obtener roles:', err);
       },
     });
-
   }
 
   onSubmit() {
@@ -140,17 +134,13 @@ export class RegisterActorsComponent {
         documentType: formValue.document_type.name,
         status: formValue.status.status,
         role: formValue.role.id,
-        department: formValue.department.id
+        department: formValue.department.id,
       };
-
-
 
       this.saveActors(actor);
     } else {
       console.error('El formulario es inválido:', this.registerForm.errors);
-      this._toastSrv.showToast(
-        'Por favor, complete todos los campos requeridos.'
-      );
+      this._toastSrv.showError('Error', 'Please fill out all required fields.');
     }
   }
 
@@ -167,7 +157,7 @@ export class RegisterActorsComponent {
       },
       error: (err) => {
         console.error('Error al registrar actor:', err.error);
-        this._toastSrv.showToast('Error al registrar');
+
         this.isLoading = false;
       },
       complete: () => {
@@ -177,18 +167,19 @@ export class RegisterActorsComponent {
         if (remainingTime > 0) {
           setTimeout(() => {
             this.isLoading = false;
-            this._toastSrv.showToast('Registro exitoso');
+            this._toastSrv.showSuccess(
+              'Success',
+              'Actor registered successfully.'
+            );
           }, remainingTime);
         } else {
           this.isLoading = false;
-          this._toastSrv.showToast('Registro exitoso');
         }
       },
     });
   }
   protected async getDepartments() {
     this.loading = true;
-
 
     this._httpSrv.get<IDepartment>('departments/').subscribe({
       next: (data) => {
@@ -201,8 +192,8 @@ export class RegisterActorsComponent {
         console.error('Error cargando departamentos:', err);
         this.error = true;
         this.loading = false;
+        this._toastSrv.showError('Error', 'Failed to load departments.');
       },
     });
   }
-
 }
