@@ -28,6 +28,9 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { RequestComponent } from '../pages/request/request.component';
 
+import { TableModule } from 'primeng/table';
+import { UsersComponent } from '../pages/users/users.component';
+import { TableComponent } from './components/table/table.component';
 
 const DECLARATIONS = [
   HeaderComponent,
@@ -41,7 +44,7 @@ const DECLARATIONS = [
   DepartmentComponent,
   LoadingSpinnerComponent,
   RequestComponent,
-
+  UsersComponent,
 ];
 
 const IMPORTS = [
@@ -64,7 +67,8 @@ const IMPORTS = [
   RippleModule,
   MatSnackBarModule,
   InputTextModule,
-  ToastModule
+  ToastModule,
+  TableModule,
 ];
 
 const EXPORTS = [
@@ -74,12 +78,11 @@ const EXPORTS = [
   DropdownComponent,
   InputComponent,
   ButtonComponent,
-  ToastModule
-
+  ToastModule,
 ];
 
 @NgModule({
-  declarations: [...DECLARATIONS],
+  declarations: [...DECLARATIONS, TableComponent],
   imports: [...IMPORTS],
   exports: [...EXPORTS],
   providers: [MessageService],

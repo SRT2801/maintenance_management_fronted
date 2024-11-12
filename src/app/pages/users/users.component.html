@@ -1,1 +1,19 @@
-<p>users works!</p>
+<div class="search-container">
+  <input
+    pInputText
+    type="text"
+    [(ngModel)]="searchText"
+    (input)="onSearchChange($event)"
+    placeholder="Search for actors..."
+    class="search-input" />
+</div>
+
+<app-table
+  [data]="actors"
+  [totalRecords]="totalRecords"
+  [rows]="rows"
+  [rowsPerPageOptions]="[10, 20, 100]"
+  [columns]="columns"
+  (onPageChange)="onPageChange($event)"
+  [globalSearch]="searchText"
+></app-table>
