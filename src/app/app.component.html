@@ -1,9 +1,10 @@
-<<app-header (sidebarToggle)="toggleSidebar()"></app-header>
-<app-sidebar [visible]="sidebarVisible" (visibleChange)="onSidebarVisibleChange($event)"></app-sidebar>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/users">Users</a>
-  <a routerLink="/dashboard">Dashboard</a>
-</nav>
+<ng-container *ngIf="router.url !== '/login'">
+  <app-header (sidebarToggle)="toggleSidebar()"></app-header>
+  <app-sidebar [visible]="sidebarVisible" (visibleChange)="onSidebarVisibleChange($event)"></app-sidebar>
+  <nav>
+    <a routerLink="/dashboard">Dashboard</a>
+    <a routerLink="/users">Users</a>
+  </nav>
+</ng-container>
 <p-toast></p-toast>
 <router-outlet></router-outlet>
