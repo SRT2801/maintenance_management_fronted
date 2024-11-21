@@ -31,6 +31,8 @@ import { RequestComponent } from '../pages/request/request.component';
 import { TableModule } from 'primeng/table';
 import { UsersComponent } from '../pages/users/users.component';
 import { TableComponent } from './components/table/table.component';
+import { LoginComponent } from '../pages/login/login.component';
+import { HomeComponent } from '../pages/home/home.component';
 
 const DECLARATIONS = [
   HeaderComponent,
@@ -45,6 +47,8 @@ const DECLARATIONS = [
   LoadingSpinnerComponent,
   RequestComponent,
   UsersComponent,
+  LoginComponent,
+  HomeComponent,
 ];
 
 const IMPORTS = [

@@ -1,15 +1,13 @@
-/* Contenedor principal */
 .card-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 2.5rem;
+  padding: 5rem;
   min-height: calc(100vh - 60px);
   background: linear-gradient(to bottom right, #f8faff, #eef2ff);
   position: relative;
 }
 
-/* Contenedor del formulario */
 .form-container {
   display: flex;
   flex-direction: column;
@@ -23,9 +21,8 @@
   position: relative;
 }
 
-/* Borde superior decorativo */
 .form-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -34,7 +31,6 @@
   background: linear-gradient(to right, #6366f1, #8b5cf6);
 }
 
-/* Filas de inputs */
 .input-row {
   display: flex;
   gap: 0.6rem;
@@ -43,12 +39,10 @@
 
 .input-row > * {
   flex: 1;
-  min-width: 0; /* Previene el desbordamiento */
+  min-width: 0;
 }
 
-/* Estilos para los componentes de entrada */
 ::ng-deep {
-  /* Inputs y Dropdowns */
   .p-inputtext,
   .p-dropdown {
     width: 100%;
@@ -62,13 +56,11 @@
     height: auto;
   }
 
-  /* Estados hover */
   .p-inputtext:hover:not(:disabled),
   .p-dropdown:hover:not(:disabled) {
     border-color: #94a3b8;
   }
 
-  /* Estados focus */
   .p-inputtext:focus,
   .p-dropdown.p-focus {
     outline: none;
@@ -76,7 +68,6 @@
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
   }
 
-  /* Dropdown específico */
   .p-dropdown {
     display: flex;
     align-items: center;
@@ -86,7 +77,6 @@
     padding-right: 2rem;
   }
 
-  /* Panel del dropdown */
   .p-dropdown-panel {
     border: none;
     border-radius: 8px;
@@ -109,7 +99,6 @@
     color: #6366f1;
   }
 
-  /* Labels */
   label {
     display: block;
     margin-bottom: 0.5rem;
@@ -118,7 +107,6 @@
     font-weight: 500;
   }
 
-  /* Botón */
   app-button button {
     width: 100%;
     padding: 0.875rem 1.5rem;
@@ -142,7 +130,6 @@
     transform: translateY(1px);
   }
 
-  /* Estados de error */
   .ng-invalid.ng-touched .p-inputtext,
   .ng-invalid.ng-touched .p-dropdown {
     border-color: #ef4444;
@@ -155,7 +142,6 @@
   }
 }
 
-/* Media queries */
 @media screen and (max-width: 768px) {
   .card-container {
     padding: 1rem;
@@ -177,12 +163,11 @@
   ::ng-deep {
     .p-dropdown,
     .p-inputtext {
-      font-size: 16px; /* Previene el zoom en iOS */
+      font-size: 16px;
     }
   }
 }
 
-/* Ajustes de accesibilidad */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
