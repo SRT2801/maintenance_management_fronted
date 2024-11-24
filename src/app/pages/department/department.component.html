@@ -20,23 +20,23 @@
               <h4>Coordinator</h4>
               <div class="info-group">
                 <label>Name:</label>
-                <p>{{ department.coordinator.name }} {{ department.coordinator.lastName }}</p>
+                <p>{{ department.coordinator?.name }} {{ department.coordinator?.lastName }}</p>
               </div>
               <div class="info-group">
                 <label>Email:</label>
-                <p>{{ department.coordinator.email }}</p>
+                <p>{{ department.coordinator?.auth?.email }}</p>
               </div>
               <div class="info-group">
                 <label>Phone:</label>
-                <p>{{ department.coordinator.phoneNumber }}</p>
+                <p>{{ department.coordinator?.phoneNumber }}</p>
               </div>
               <div class="info-group">
                 <label>Document Type:</label>
-                <p>{{ department.coordinator.documentType }} </p>
+                <p>{{ department.coordinator?.documentType }}</p>
               </div>
               <div class="info-group">
                 <label>Document Number:</label>
-                <p>{{ department.coordinator.documentNumber }}</p>
+                <p>{{ department.coordinator?.documentNumber }}</p>
               </div>
             </div>
           </div>
