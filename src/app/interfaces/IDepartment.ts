@@ -1,5 +1,6 @@
 import { DepartmentStatus } from '../enums/department/Status';
 import { IActor } from './IActor';
+import { IAuth } from './IAuth';
 
 export interface Department {
   id: number;
@@ -8,6 +9,7 @@ export interface Department {
   phoneNumber: string;
   coordinator: IActor;
   status?: DepartmentStatus;
+  auth: IAuth;
 }
 export interface IDepartment {
   message: string;
