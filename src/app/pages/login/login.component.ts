@@ -1,19 +1,27 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { AuthService } from '../../shared/services/auth/auth.service';
+import { Router } from '@angular/router';
+import { ToastService } from '../../shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private toastService: ToastService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      rememberMe: [false],
+      password: ['', Validators.required]
     });
   }
 
@@ -27,7 +35,37 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      this.isLoading = true;
+      const loadingDuration = 4000;
+      const startLoadingTime = Date.now();
+
+      this.authService.login(this.loginForm.value).subscribe({
+        next: () => {
+          console.log('Login exitoso, redirigiendo...');
+          this.toastService.showSuccess('Success', 'Login Successfully');
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('Login error', err);
+          this.toastService.showError('Login error', 'Invalid credentials');
+          this.isLoading = false;
+        },
+        complete: () => {
+          const elapsedTime = Date.now() - startLoadingTime;
+          const remainingTime = loadingDuration - elapsedTime;
+
+          if (remainingTime > 0) {
+            setTimeout(() => {
+              this.isLoading = false;
+            }, remainingTime);
+          } else {
+            this.isLoading = false;
+          }
+        }
+      });
+    } else {
+      console.error('Formulario inválido', this.loginForm.errors);
+      this.toastService.showError('Error', 'Por favor, complete todos los campos requeridos.');
     }
   }
 }
