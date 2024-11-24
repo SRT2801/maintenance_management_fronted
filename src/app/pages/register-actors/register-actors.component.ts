@@ -63,6 +63,11 @@ export class RegisterActorsComponent {
     return this.registerForm.get('document_number') as FormControl;
   }
 
+  get passwordControl() {
+    return this.registerForm.get('password') as FormControl;
+  }
+
+
   ngOnInit() {
     this.getRoles();
     this.getDepartments();
@@ -70,6 +75,7 @@ export class RegisterActorsComponent {
     this.registerForm = new FormGroup({
       name: new FormControl('', Validators.required),
       last_name: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
       phone_number: new FormControl('', [
         Validators.required,
         Validators.pattern(/^\d{10}$/),
@@ -105,6 +111,10 @@ export class RegisterActorsComponent {
         description: '',
         phoneNumber: '',
         coordinator: this.actor,
+        auth: {
+          email: '',
+          password: '',
+        },
       },
     ];
   }
@@ -125,39 +135,46 @@ export class RegisterActorsComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.value;
-      const actor: IActor = {
-        name: formValue.name,
-        lastName: formValue.last_name,
-        phoneNumber: formValue.phone_number,
-        email: formValue.email,
-        documentNumber: formValue.document_number,
-        documentType: formValue.document_type.name,
-        status: formValue.status.status,
-        role: formValue.role.id,
-        department: formValue.department.id,
+      const actor = {
+        actor: {
+          name: formValue.name,
+          lastName: formValue.last_name,
+          phoneNumber: formValue.phone_number,
+          documentNumber: formValue.document_number,
+          documentType: formValue.document_type.name,
+          status: formValue.status.status,
+          role: formValue.role.id,
+          department: formValue.department.id,
+        },
+        auth: {
+          email: formValue.email,
+          password: formValue.password,
+        },
       };
+
+      console.log('Actor a registrar:', actor);
 
       this.saveActors(actor);
     } else {
       console.error('El formulario es inválido:', this.registerForm.errors);
-      this._toastSrv.showError('Error', 'Please fill out all required fields.');
+      this._toastSrv.showError('Error', 'Por favor, complete todos los campos requeridos.');
     }
   }
 
-  protected async saveActors(body: IActor) {
+  protected async saveActors(body: any) {
     this.isLoading = true;
 
     const loadingDuration = 2000;
     const startLoadingTime = Date.now();
 
-    this._httpSrv.post<IActor>('actors/', body).subscribe({
+    this._httpSrv.post('actors/', body).subscribe({
       next: (res) => {
         console.log('Actor registrado exitosamente:', res);
         this.registerForm.reset();
       },
       error: (err) => {
         console.error('Error al registrar actor:', err.error);
-
+        this._toastSrv.showError('Error', 'Error al registrar el actor.');
         this.isLoading = false;
       },
       complete: () => {
@@ -167,17 +184,16 @@ export class RegisterActorsComponent {
         if (remainingTime > 0) {
           setTimeout(() => {
             this.isLoading = false;
-            this._toastSrv.showSuccess(
-              'Success',
-              'Actor registered successfully.'
-            );
+            this._toastSrv.showSuccess('Success', 'Actor registrado exitosamente.');
           }, remainingTime);
         } else {
           this.isLoading = false;
+          this._toastSrv.showSuccess('Success', 'Actor registrado exitosamente.');
         }
       },
     });
   }
+
   protected async getDepartments() {
     this.loading = true;
 
