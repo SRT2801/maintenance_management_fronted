@@ -13,21 +13,23 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: { email: string; password: string }): Observable<string> {
+    console.log('Enviando credenciales:', credentials);
 
-  return this.http.post<{ message: string; data: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
-    tap(response => {
-      console.log('Respuesta del servidor:', response);
-      const token = response.data;
-      if (token) {
-        localStorage.setItem('authToken', token);
+    return this.http.post<{ message: string; data: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+      tap(response => {
+        console.log('Respuesta del servidor:', response);
+        const token = response.data; // Extraemos el token del campo `data`
+        if (token) {
+          localStorage.setItem('authToken', token);
+          console.log('Token almacenado:', token);
+        } else {
+          console.error('No se recibió un token válido');
+        }
+      }),
+      map(response => response.data) // Devolvemos el token al suscriptor
+    );
+  }
 
-      } else {
-        console.error('No se recibió un token válido');
-      }
-    }),
-    map((response: { data: any; }) => response.data)
-  );
-}
 
 
 

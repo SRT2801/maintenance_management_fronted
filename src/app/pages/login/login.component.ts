@@ -36,7 +36,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      const loadingDuration = 4000;
+      const loadingDuration = 2000;
       const startLoadingTime = Date.now();
 
       this.authService.login(this.loginForm.value).subscribe({
@@ -46,8 +46,8 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          console.error('Login error', err);
-          this.toastService.showError('Login error', 'Invalid credentials');
+          console.error('Error en el login:', err);
+          this.toastService.showError('Error en el login', 'Invalid credentials');
           this.isLoading = false;
         },
         complete: () => {
