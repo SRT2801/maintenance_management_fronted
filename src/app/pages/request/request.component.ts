@@ -66,6 +66,7 @@ export class RequestComponent {
         description: '',
         phoneNumber: '',
         coordinator: this.actor,
+        auth: { email: '', password: '' },
       },
     ];
 
