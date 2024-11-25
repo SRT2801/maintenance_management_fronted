@@ -184,11 +184,11 @@ export class RegisterActorsComponent {
         if (remainingTime > 0) {
           setTimeout(() => {
             this.isLoading = false;
-            this._toastSrv.showSuccess('Success', 'Actor registrado exitosamente.');
+            this._toastSrv.showSuccess('Success', 'Actor successfully registered.');
           }, remainingTime);
         } else {
           this.isLoading = false;
-          this._toastSrv.showSuccess('Success', 'Actor registrado exitosamente.');
+          this._toastSrv.showSuccess('Success', 'Actor successfully registered');
         }
       },
     });
