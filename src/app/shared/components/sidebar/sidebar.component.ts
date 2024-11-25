@@ -1,17 +1,24 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
+import { AuthService } from '../../services/auth/auth.service';
+import { ToastService } from '../../services/toast/toast.service';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css',
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   items!: MenuItem[];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastService: ToastService
+  ) {}
 
   closeSidebar() {
     this.visible = false;
@@ -21,6 +28,15 @@ export class SidebarComponent {
   navigateTo(route: string) {
     this.router.navigate([route]);
     this.closeSidebar();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.authService.logoutObservable.subscribe(() => {
+      this.toastService.showSuccess('Success', 'Logout successfully');
+      this.router.navigate(['/login']);
+      this.closeSidebar();
+    });
   }
 
   ngOnInit() {
@@ -80,6 +96,18 @@ export class SidebarComponent {
             command: () => this.navigateTo('request'),
           },
         ],
+      },
+
+      {
+        label: 'Logout',
+        icon: 'pi pi-sign-out',
+        command: () => this.logout(),
+      },
+
+      {
+        label: 'Upload Files',
+        icon: 'pi pi-file-arrow-up',
+        command: () => this.navigateTo('uploadfile'),
       },
     ];
   }

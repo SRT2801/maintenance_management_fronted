@@ -16,6 +16,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/f
 export class InputComponent implements ControlValueAccessor {
   @Input() control!: FormControl;
   @Input() label!: string;
+  @Input() type: string = 'text';
 
   onChange = (value: any) => {};
   onTouched = () => {};

@@ -1,4 +1,4 @@
 <div class="inputGroup">
-  <input [ngModel]="control.value" (ngModelChange)="control.setValue($event)" (input)="onInput($event)" (blur)="onBlur()" required autocomplete="on" />
+  <input [ngModel]="control.value" (ngModelChange)="control.setValue($event)" (input)="onInput($event)" (blur)="onBlur()" required autocomplete="on" [type]="type" />
   <label>{{ label }}</label>
 </div>
