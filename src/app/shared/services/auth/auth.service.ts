@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment.development';
+import { IAuthResponse } from '../../../interfaces/IAuthResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,10 @@ export class AuthService {
         }),
         map((response) => response.data)
       );
+  }
+
+  public async getAuthData(): Promise<IAuthResponse> {
+    return await lastValueFrom(this.http.get<IAuthResponse>(`${this.apiUrl}/auth/data`)); 
   }
 
   logout() {

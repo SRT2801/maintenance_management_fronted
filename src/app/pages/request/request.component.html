@@ -8,9 +8,9 @@
         <app-input [control]="descriptionControl" label="Description"></app-input>
       </div>
       <div class="input-row">
-        <app-dropdown [options]="selectedDepartments" formControlName="department" optionLabel="name"
+        <app-dropdown [options]="selectedDepartment" formControlName="department" optionLabel="name"
           placeholder="Select a Department"></app-dropdown>
-        <app-dropdown [options]="selectedMaintType" formControlName="typeMaintenance" optionLabel="name"
+        <app-dropdown [options]="selectedMaintType" formControlName="maintenanceType" optionLabel="name"
           placeholder=" Maintenance Type"></app-dropdown>
       </div>
       <app-button (buttonClick)="onSubmit()" text="Create Request"></app-button>
