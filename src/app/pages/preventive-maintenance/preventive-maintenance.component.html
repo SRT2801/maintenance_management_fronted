@@ -1,0 +1,32 @@
+<div class="preventive-container">
+  <h1>Preventive Maintenances</h1>
+
+  <div class="cards-grid">
+    <div class="card" *ngFor="let maintenance of preventiveMaintenances">
+      <div class="card-header">
+        <span class="status-badge" [ngClass]="maintenance.status">
+          {{ maintenance.status }}
+        </span>
+        <div class="date">
+          <i class="pi pi-calendar"></i>
+          {{maintenance.createdAt | date:'medium'}}
+        </div>
+      </div>
+      <div class="card-content">
+        <h2>{{ maintenance.name || 'No title'}}</h2>
+        <p class="description">{{ maintenance.description || 'No description'}}</p>
+        <div class="info-section">
+          <div class="info-group">
+            <i class="pi pi-building"></i>
+            <div class="info-text">
+              <label>Department</label>
+              <p>{{ maintenance.deptMaintTypeAssignment?.department?.name }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>
+</div>
