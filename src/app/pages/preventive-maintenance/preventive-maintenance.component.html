@@ -2,7 +2,9 @@
   <h1>Preventive Maintenances</h1>
 
   <div class="cards-grid">
-    <div class="card" *ngFor="let maintenance of preventiveMaintenances">
+    <div class="card" *ngFor="let maintenance of preventiveMaintenances"
+         (click)="navigateToDetails(maintenance.id)"
+         [class.clickable]="true">
       <div class="card-header">
         <span class="status-badge" [ngClass]="maintenance.status">
           {{ maintenance.status }}

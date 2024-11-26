@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../shared/services/http/http.service';
 import { ToastService } from '../../shared/services/toast/toast.service';
+import { Router } from '@angular/router';
 
-// Actualiza la interfaz para que coincida con la respuesta de la API
 interface IPreventiveMaintenance {
   id: number;
   name: string;
@@ -35,7 +35,8 @@ export class PreventiveMaintenanceComponent implements OnInit {
 
   constructor(
     private readonly _httpSrv: HttpService,
-    private readonly _toastSrv: ToastService
+    private readonly _toastSrv: ToastService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -57,5 +58,9 @@ export class PreventiveMaintenanceComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  navigateToDetails(id: number) {
+    this.router.navigate(['/preventive-maintenance-details', id]);
   }
 }
