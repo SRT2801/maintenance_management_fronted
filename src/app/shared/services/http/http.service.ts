@@ -17,4 +17,8 @@ export class HttpService {
   public post<T>(endpoint: string, body: any): Observable<T> {
     return this._httpClient.post<T>(`${this._baseUrl}/${endpoint}`, body);
   }
+
+  public patch<T>(endpoint: string, body: any): Observable<T> {
+    return this._httpClient.patch<T>(`${this._baseUrl}/${endpoint}`, body);
+  }
 }
