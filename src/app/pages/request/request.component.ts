@@ -98,12 +98,17 @@ export class RequestComponent {
     const loadingDuration = 2000;
     const startLoadingTime = Date.now();
 
-    const maintenanceType = this.requestForm.get('maintenanceType')?.value?.name?.toLowerCase();
+    const maintenanceType = this.requestForm
+      .get('maintenanceType')
+      ?.value?.name?.toLowerCase();
 
     if (maintenanceType === MaintenanceType.PREVENTIVE) {
       // Verificar que se haya subido un archivo
       if (!this.uploadedFile) {
-        this._toastSrv.showError('Error', 'Please upload a completed form file');
+        this._toastSrv.showError(
+          'Error',
+          'Please upload a completed form file'
+        );
         this.isLoading = false;
         return;
       }
@@ -111,43 +116,56 @@ export class RequestComponent {
       const preventiveBody = {
         maintenance: {
           name: body.name,
-          description: body.description
+          description: body.description,
         },
         completedForm: {
-          filePath: this.uploadedFile // Usar la URL del archivo subido
-        }
+          filePath: this.uploadedFile, // Usar la URL del archivo subido
+        },
       };
 
-      this._httpSrv.post<IRequest>('maintenance/preventive/', preventiveBody).subscribe({
-        next: (res) => {
-          console.log('Mantenimiento preventivo registrado:', res);
-          this.requestForm.reset();
-          this._toastSrv.showSuccess('Success', 'Preventive maintenance created successfully');
-        },
-        error: (err) => {
-          console.error('Error al registrar mantenimiento preventivo:', err.error);
-          this._toastSrv.showError('Error', 'Error registering preventive maintenance');
-          this.isLoading = false;
-        },
-        complete: () => {
-          const elapsedTime = Date.now() - startLoadingTime;
-          const remainingTime = loadingDuration - elapsedTime;
-          if (remainingTime > 0) {
-            setTimeout(() => {
-              this.isLoading = false;
-            }, remainingTime);
-          } else {
+      this._httpSrv
+        .post<IRequest>('maintenance/preventive/', preventiveBody)
+        .subscribe({
+          next: (res) => {
+            console.log('Mantenimiento preventivo registrado:', res);
+            this.requestForm.reset();
+            this._toastSrv.showSuccess(
+              'Success',
+              'Preventive maintenance created successfully'
+            );
+          },
+          error: (err) => {
+            console.error(
+              'Error al registrar mantenimiento preventivo:',
+              err.error
+            );
+            this._toastSrv.showError(
+              'Error',
+              'Error registering preventive maintenance'
+            );
             this.isLoading = false;
-          }
-        }
-      });
+          },
+          complete: () => {
+            const elapsedTime = Date.now() - startLoadingTime;
+            const remainingTime = loadingDuration - elapsedTime;
+            if (remainingTime > 0) {
+              setTimeout(() => {
+                this.isLoading = false;
+              }, remainingTime);
+            } else {
+              this.isLoading = false;
+            }
+          },
+        });
     } else {
-
       this._httpSrv.post<IRequest>('maintenance/', body).subscribe({
         next: (res) => {
           console.log('Solicitud registrada exitosamente:', res);
           this.requestForm.reset();
-          this._toastSrv.showSuccess('Success', 'Maintenance request created successfully');
+          this._toastSrv.showSuccess(
+            'Success',
+            'Maintenance request created successfully'
+          );
         },
         error: (err) => {
           console.error('Error al registrar la solicitud:', err.error);
@@ -164,7 +182,7 @@ export class RequestComponent {
           } else {
             this.isLoading = false;
           }
-        }
+        },
       });
     }
   }
@@ -186,7 +204,12 @@ export class RequestComponent {
         maintenanceType: maintenanceTypeId,
       };
 
-      return lastValueFrom(this._httpSrv.post<IAssignmentResponse>('dept-maint-type-assignment', body));
+      return lastValueFrom(
+        this._httpSrv.post<IAssignmentResponse>(
+          'dept-maint-type-assignment',
+          body
+        )
+      );
     } catch (error) {
       throw error;
     }
@@ -213,24 +236,26 @@ export class RequestComponent {
   }
 
   isPreventiveMaintenance(): boolean {
-    return this.requestForm.get('maintenanceType')?.value?.name?.toLowerCase() === MaintenanceType.PREVENTIVE;
+    return (
+      this.requestForm.get('maintenanceType')?.value?.name?.toLowerCase() ===
+      MaintenanceType.PREVENTIVE
+    );
   }
 
   async onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
-      // Crear FormData con el archivo
       const formData = new FormData();
       formData.append('file', file);
       formData.append('fileType', 'completed');
 
       try {
-        // Subir el archivo y obtener la URL
         const fileResponse = await firstValueFrom(
-          this._httpSrv.post<{message: string, data: string}>('file/upload/', formData)
+          this._httpSrv.post<{ message: string; data: string }>(
+            'file/upload/',
+            formData
+          )
         );
-
-        // Guardar la URL del archivo
         this.uploadedFile = fileResponse.data;
         this._toastSrv.showSuccess('Success', 'File uploaded successfully');
       } catch (error) {
