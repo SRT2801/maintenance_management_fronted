@@ -34,6 +34,7 @@ import { TableComponent } from './components/table/table.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { PreventiveMaintenanceComponent } from '../pages/preventive-maintenance/preventive-maintenance.component';
+import { PreventiveMaintenanceDetailsComponent } from '../pages/preventive-maintenance-details/preventive-maintenance-details.component';
 
 
 
@@ -53,7 +54,8 @@ const DECLARATIONS = [
   UsersComponent,
   LoginComponent,
   HomeComponent,
-  PreventiveMaintenanceComponent
+  PreventiveMaintenanceComponent,
+  PreventiveMaintenanceDetailsComponent
 ];
 
 const IMPORTS = [
