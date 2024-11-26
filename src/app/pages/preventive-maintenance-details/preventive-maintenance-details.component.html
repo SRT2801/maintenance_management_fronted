@@ -1,0 +1,43 @@
+<div class="details-container" *ngIf="maintenance">
+  <div class="details-card">
+    <div class="card-header">
+      <h1>{{maintenance.name}}</h1>
+      <span class="status-badge" [ngClass]="maintenance.status">
+        {{maintenance.status}}
+      </span>
+    </div>
+
+    <div class="card-content">
+      <div class="info-section">
+        <h2>Details</h2>
+        <div class="info-group">
+          <label>Description</label>
+          <p>{{maintenance.description}}</p>
+        </div>
+
+
+        <div class="info-group">
+          <label>Created At</label>
+          <p>Not Available</p>
+        </div>
+      </div>
+
+      <div class="stages-section">
+        <h2>Stages</h2>
+        <div class="stages-list">
+          <div class="stage-item" *ngFor="let stage of stages">
+            <div class="stage-info">
+              <h3>{{stage.name}}</h3>
+              <p>{{stage.description}}</p>
+            </div>
+            <button class="update-btn" (click)="updateStageAndStatus(stage.id, 'in_progress')">
+              Move to this stage
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>
+</div>
