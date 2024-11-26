@@ -6,6 +6,8 @@ import { SharedModule } from './shared/shared.module';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { PreventiveMaintenanceComponent } from './pages/preventive-maintenance/preventive-maintenance.component';
+
 
 
 @NgModule({
