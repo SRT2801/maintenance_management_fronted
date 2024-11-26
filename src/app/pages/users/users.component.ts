@@ -37,7 +37,7 @@ export class UsersComponent {
     this.currentPage = page;
     this.rows = limit;
 
-    let url = `actors/?page=${page + 1}&limit=${limit}`;
+    let url = `actor/?page=${page + 1}&limit=${limit}`;
     if (this.searchText) {
       url += `&search=${this.searchText}`;
     }
@@ -63,6 +63,6 @@ export class UsersComponent {
 
   onSearchChange(event: any) {
     this.searchText = event.target.value;
-    this.loadActors(this.currentPage, this.rows); 
+    this.loadActors(this.currentPage, this.rows);
   }
 }

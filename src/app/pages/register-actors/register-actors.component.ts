@@ -120,7 +120,7 @@ export class RegisterActorsComponent {
   }
 
   protected async getRoles() {
-    this._httpSrv.get<IRole>('roles/').subscribe({
+    this._httpSrv.get<IRole>('role/').subscribe({
       next: (data) => {
         this.roles = data;
         this.selectedRoles = this.roles.data;
@@ -167,7 +167,7 @@ export class RegisterActorsComponent {
     const loadingDuration = 2000;
     const startLoadingTime = Date.now();
 
-    this._httpSrv.post('actors/', body).subscribe({
+    this._httpSrv.post('actor/', body).subscribe({
       next: (res) => {
         console.log('Actor registrado exitosamente:', res);
         this.registerForm.reset();
@@ -197,7 +197,7 @@ export class RegisterActorsComponent {
   protected async getDepartments() {
     this.loading = true;
 
-    this._httpSrv.get<IDepartment>('departments/').subscribe({
+    this._httpSrv.get<IDepartment>('department/').subscribe({
       next: (data) => {
         this.departments = data;
         this.selectedDepartments = this.departments.data;

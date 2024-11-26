@@ -13,6 +13,18 @@
         <app-dropdown [options]="selectedMaintType" formControlName="maintenanceType" optionLabel="name"
           placeholder=" Maintenance Type"></app-dropdown>
       </div>
+      <div class="input-row" *ngIf="isPreventiveMaintenance()">
+        <div class="file-upload">
+          <label for="fileInput" class="file-label">Upload Completed Form</label>
+          <input
+            type="file"
+            id="fileInput"
+            (change)="onFileSelected($event)"
+            accept=".pdf,.doc,.docx, .xslx"
+            class="file-input"
+          />
+        </div>
+      </div>
       <app-button (buttonClick)="onSubmit()" text="Create Request"></app-button>
     </div>
   </form>

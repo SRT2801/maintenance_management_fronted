@@ -35,6 +35,7 @@ export class RequestComponent {
   isLoading = false;
   status!: State[];
   selectedMaintType!: IMaintenanceType[];
+  private uploadedFile: string | null = null;
 
   constructor(
     private readonly _httpSrv: HttpService,
@@ -74,7 +75,7 @@ export class RequestComponent {
         this.requestForm.get('maintenanceType')?.value.id;
 
       const formValue = this.requestForm.value;
-
+      console.log('Form value:', formValue);
       const savedAssignment = await this.doAssignment(
         departmentId,
         maintenanceTypeId
@@ -94,38 +95,78 @@ export class RequestComponent {
 
   protected async saveRequest(body: IRequest) {
     this.isLoading = true;
-
     const loadingDuration = 2000;
     const startLoadingTime = Date.now();
 
-    this._httpSrv.post<IRequest>('maintenances/', body).subscribe({
-      next: (res) => {
-        console.log('Solicitud registrada exitosamente:', res);
-        this.requestForm.reset();
-      },
-      error: (err) => {
-        console.error('Error al registrar la solicitud:', err.error);
-        this._toastSrv.showError('Error', 'Error registering');
-        this.isLoading = false;
-      },
-      complete: () => {
-        const elapsedTime = Date.now() - startLoadingTime;
-        const remainingTime = loadingDuration - elapsedTime;
+    const maintenanceType = this.requestForm.get('maintenanceType')?.value?.name?.toLowerCase();
 
-        if (remainingTime > 0) {
-          setTimeout(() => {
-            this.isLoading = false;
-            this._toastSrv.showSuccess(
-              'Success',
-              'request created successfully'
-            );
-          }, remainingTime);
-        } else {
-          this.isLoading = false;
-          this._toastSrv.showSuccess('Success', 'request created successfully');
+    if (maintenanceType === MaintenanceType.PREVENTIVE) {
+      // Verificar que se haya subido un archivo
+      if (!this.uploadedFile) {
+        this._toastSrv.showError('Error', 'Please upload a completed form file');
+        this.isLoading = false;
+        return;
+      }
+
+      const preventiveBody = {
+        maintenance: {
+          name: body.name,
+          description: body.description
+        },
+        completedForm: {
+          filePath: this.uploadedFile // Usar la URL del archivo subido
         }
-      },
-    });
+      };
+
+      this._httpSrv.post<IRequest>('maintenance/preventive/', preventiveBody).subscribe({
+        next: (res) => {
+          console.log('Mantenimiento preventivo registrado:', res);
+          this.requestForm.reset();
+          this._toastSrv.showSuccess('Success', 'Preventive maintenance created successfully');
+        },
+        error: (err) => {
+          console.error('Error al registrar mantenimiento preventivo:', err.error);
+          this._toastSrv.showError('Error', 'Error registering preventive maintenance');
+          this.isLoading = false;
+        },
+        complete: () => {
+          const elapsedTime = Date.now() - startLoadingTime;
+          const remainingTime = loadingDuration - elapsedTime;
+          if (remainingTime > 0) {
+            setTimeout(() => {
+              this.isLoading = false;
+            }, remainingTime);
+          } else {
+            this.isLoading = false;
+          }
+        }
+      });
+    } else {
+
+      this._httpSrv.post<IRequest>('maintenance/', body).subscribe({
+        next: (res) => {
+          console.log('Solicitud registrada exitosamente:', res);
+          this.requestForm.reset();
+          this._toastSrv.showSuccess('Success', 'Maintenance request created successfully');
+        },
+        error: (err) => {
+          console.error('Error al registrar la solicitud:', err.error);
+          this._toastSrv.showError('Error', 'Error registering');
+          this.isLoading = false;
+        },
+        complete: () => {
+          const elapsedTime = Date.now() - startLoadingTime;
+          const remainingTime = loadingDuration - elapsedTime;
+          if (remainingTime > 0) {
+            setTimeout(() => {
+              this.isLoading = false;
+            }, remainingTime);
+          } else {
+            this.isLoading = false;
+          }
+        }
+      });
+    }
   }
 
   private initForm() {
@@ -145,7 +186,7 @@ export class RequestComponent {
         maintenanceType: maintenanceTypeId,
       };
 
-      return lastValueFrom(this._httpSrv.post<IAssignmentResponse>('dept-maint-type-assignment', body)); 
+      return lastValueFrom(this._httpSrv.post<IAssignmentResponse>('dept-maint-type-assignment', body));
     } catch (error) {
       throw error;
     }
@@ -154,7 +195,7 @@ export class RequestComponent {
   private async loadMaintenanceType() {
     try {
       const response = await firstValueFrom(
-        this._httpSrv.get<IMaintenanceTypeResponse>('maintenances-types')
+        this._httpSrv.get<IMaintenanceTypeResponse>('maintenances-type')
       );
       this.maintenanceType = response;
     } catch (error) {
@@ -168,6 +209,34 @@ export class RequestComponent {
       this.currentActor = authData;
     } catch (error) {
       throw error;
+    }
+  }
+
+  isPreventiveMaintenance(): boolean {
+    return this.requestForm.get('maintenanceType')?.value?.name?.toLowerCase() === MaintenanceType.PREVENTIVE;
+  }
+
+  async onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      // Crear FormData con el archivo
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('fileType', 'completed');
+
+      try {
+        // Subir el archivo y obtener la URL
+        const fileResponse = await firstValueFrom(
+          this._httpSrv.post<{message: string, data: string}>('file/upload/', formData)
+        );
+
+        // Guardar la URL del archivo
+        this.uploadedFile = fileResponse.data;
+        this._toastSrv.showSuccess('Success', 'File uploaded successfully');
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        this._toastSrv.showError('Error', 'Failed to upload file');
+      }
     }
   }
 }

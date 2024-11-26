@@ -1,18 +1,20 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
 import { AuthService } from '../../services/auth/auth.service';
 import { ToastService } from '../../services/toast/toast.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy {
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   items!: MenuItem[];
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -32,11 +34,18 @@ export class SidebarComponent {
 
   logout() {
     this.authService.logout();
-    this.authService.logoutObservable.subscribe(() => {
-      this.toastService.showSuccess('Success', 'Logout successfully');
-      this.router.navigate(['/login']);
-      this.closeSidebar();
-    });
+    this.authService.logoutObservable
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.toastService.showSuccess('Success', 'Logout successfully');
+        this.router.navigate(['/login']);
+        this.closeSidebar();
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit() {
@@ -87,13 +96,18 @@ export class SidebarComponent {
       },
 
       {
-        label: 'Request',
-        icon: 'pi pi-file-edit',
+        label: 'Maintenance',
+        icon: '',
         items: [
           {
             label: 'Create Request',
-            icon: '',
+            icon: 'pi pi-file-edit',
             command: () => this.navigateTo('request'),
+          },
+          {
+            label: 'Preventive Maintenances',
+            icon: 'pi pi-list',
+            command: () => this.navigateTo('/preventive-maintenance'),
           },
         ],
       },
@@ -104,11 +118,7 @@ export class SidebarComponent {
         command: () => this.logout(),
       },
 
-      {
-        label: 'Upload Files',
-        icon: 'pi pi-file-arrow-up',
-        command: () => this.navigateTo('uploadfile'),
-      },
+
     ];
   }
 }

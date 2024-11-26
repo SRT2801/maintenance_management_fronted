@@ -22,7 +22,7 @@ export class DepartmentComponent implements OnInit {
   public async getDepartments() {
     this.loading = true;
 
-    this._httpSrv.get<IDepartment>('departments/').subscribe({
+    this._httpSrv.get<IDepartment>('department/').subscribe({
       next: (data) => {
         this.departments = data;
         this.selectedDepartments = this.departments.data;

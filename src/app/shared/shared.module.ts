@@ -33,6 +33,10 @@ import { UsersComponent } from '../pages/users/users.component';
 import { TableComponent } from './components/table/table.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { HomeComponent } from '../pages/home/home.component';
+import { PreventiveMaintenanceComponent } from '../pages/preventive-maintenance/preventive-maintenance.component';
+
+
+
 
 const DECLARATIONS = [
   HeaderComponent,
@@ -49,6 +53,7 @@ const DECLARATIONS = [
   UsersComponent,
   LoginComponent,
   HomeComponent,
+  PreventiveMaintenanceComponent
 ];
 
 const IMPORTS = [
