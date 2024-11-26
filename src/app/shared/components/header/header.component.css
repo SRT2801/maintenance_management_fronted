@@ -9,7 +9,7 @@
   background-color: white;
   border-bottom: 1px solid #ccc;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 10; /* Coloca el header en el frente */
+  z-index: 10; 
 }
 
 .header-title {
@@ -20,5 +20,5 @@
 }
 
 body {
-  margin-top: 60px; /* Deja espacio para el header */
+  margin-top: 60px; 
 }
