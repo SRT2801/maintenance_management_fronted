@@ -20,7 +20,6 @@
     </div>
 
     <div class="card-content">
-      <!-- Detalles Generales -->
       <div class="info-section">
         <h2><i class="pi pi-info-circle"></i> Detalles del Mantenimiento</h2>
         <div class="info-group">
@@ -32,8 +31,6 @@
           <p>{{maintenance.status}}</p>
         </div>
       </div>
-
-      <!-- Detalles de la Asignación -->
       <div class="info-section">
         <h2><i class="pi pi-user"></i> Detalles de la Asignación</h2>
         <div class="info-grid">
@@ -53,8 +50,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Información del Departamento -->
       <div class="info-section">
         <h2><i class="pi pi-building"></i> Información del Departamento</h2>
         <div class="info-grid">
@@ -78,8 +73,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Sección de Ejecutores -->
       <div class="info-section">
         <h2><i class="pi pi-users"></i> Ejecutores Asignados</h2>
         <div class="executors-list">
@@ -117,7 +110,6 @@
           </div>
         </div>
       </div>
-      <!-- Etapas del Mantenimiento -->
       <div class="stages-section">
         <h2><i class="pi pi-list"></i> Etapas del Proceso</h2>
         <div class="stages-list">
@@ -128,7 +120,6 @@
               <p>{{stage.description}}</p>
             </div>
             <div class="stage-actions">
-              <!-- Input para el archivo -->
               <div class="file-upload" *ngIf="selectedStage === stage.id">
                 <label for="formFile" class="file-label">Formulario completado</label>
                 <input
@@ -138,7 +129,6 @@
                   (change)="onFileSelected($event)"
                   accept=".pdf,.doc,.docx,.xlsx">
               </div>
-              <!-- Botón de actualizar -->
               <button class="update-btn" (click)="selectStage(stage.id)">
                 <i class="pi pi-arrow-right"></i>
                 Mover a esta etapa
@@ -152,3 +142,4 @@
 
   <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>
 </div>
+    
