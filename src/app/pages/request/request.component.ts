@@ -103,7 +103,6 @@ export class RequestComponent {
       ?.value?.name?.toLowerCase();
 
     if (maintenanceType === MaintenanceType.PREVENTIVE) {
-      // Verificar que se haya subido un archivo
       if (!this.uploadedFile) {
         this._toastSrv.showError(
           'Error',
@@ -119,7 +118,7 @@ export class RequestComponent {
           description: body.description,
         },
         completedForm: {
-          filePath: this.uploadedFile, // Usar la URL del archivo subido
+          filePath: this.uploadedFile,
         },
       };
 
