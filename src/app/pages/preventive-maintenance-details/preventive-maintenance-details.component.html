@@ -1,38 +1,149 @@
 <div class="details-container" *ngIf="maintenance">
   <div class="details-card">
     <div class="card-header">
-      <h1>{{maintenance.name}}</h1>
-      <span class="status-badge" [ngClass]="maintenance.status">
-        {{maintenance.status}}
-      </span>
+      <div class="header-content">
+        <h1>{{maintenance.name}}</h1>
+        <span class="status-badge" [ngClass]="maintenance.status">
+          {{maintenance.status}}
+        </span>
+      </div>
+      <div class="header-dates">
+        <div class="date-info">
+          <i class="pi pi-calendar"></i>
+          <span>Creado: {{maintenance.createdAt | date:'medium'}}</span>
+        </div>
+        <div class="date-info">
+          <i class="pi pi-clock"></i>
+          <span>Actualizado: {{maintenance.updatedAt | date:'medium'}}</span>
+        </div>
+      </div>
     </div>
 
     <div class="card-content">
+      <!-- Detalles Generales -->
       <div class="info-section">
-        <h2>Details</h2>
+        <h2><i class="pi pi-info-circle"></i> Detalles del Mantenimiento</h2>
         <div class="info-group">
-          <label>Description</label>
-          <p>{{maintenance.description}}</p>
+          <label>Descripción</label>
+          <p>{{maintenance.description || 'Sin descripción'}}</p>
         </div>
-
-
         <div class="info-group">
-          <label>Created At</label>
-          <p>Not Available</p>
+          <label>Estado Actual</label>
+          <p>{{maintenance.status}}</p>
         </div>
       </div>
 
+      <!-- Detalles de la Asignación -->
+      <div class="info-section">
+        <h2><i class="pi pi-user"></i> Detalles de la Asignación</h2>
+        <div class="info-grid">
+          <div class="info-group">
+            <label>Prioridad</label>
+            <p [class]="'priority-' + maintenance.deptMaintTypeAssignment.priority">
+              {{maintenance.deptMaintTypeAssignment.priority || 'No asignada'}}
+            </p>
+          </div>
+          <div class="info-group">
+            <label>Tipo de Mantenimiento</label>
+            <p>{{maintenance.deptMaintTypeAssignment.maintenanceType?.name || 'No especificado'}}</p>
+          </div>
+          <div class="info-group full-width">
+            <label>Comentarios</label>
+            <p>{{maintenance.deptMaintTypeAssignment.comments || 'Sin comentarios'}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información del Departamento -->
+      <div class="info-section">
+        <h2><i class="pi pi-building"></i> Información del Departamento</h2>
+        <div class="info-grid">
+          <div class="info-group">
+            <label>Nombre del Departamento</label>
+            <p>{{maintenance.deptMaintTypeAssignment.department.name}}</p>
+          </div>
+          <div class="info-group">
+            <label>Teléfono</label>
+            <p>{{maintenance.deptMaintTypeAssignment.department.phoneNumber}}</p>
+          </div>
+          <div class="info-group">
+            <label>Estado</label>
+            <p [class]="'status-' + maintenance.deptMaintTypeAssignment.department.status.toLowerCase()">
+              {{maintenance.deptMaintTypeAssignment.department.status}}
+            </p>
+          </div>
+          <div class="info-group full-width">
+            <label>Descripción del Departamento</label>
+            <p>{{maintenance.deptMaintTypeAssignment.department.description}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Ejecutores -->
+      <div class="info-section">
+        <h2><i class="pi pi-users"></i> Ejecutores Asignados</h2>
+        <div class="executors-list">
+          <div class="info-group" *ngFor="let execution of maintenance.executions">
+            <div class="stage-header">
+              <h3><i class="pi pi-flag"></i> Etapa: {{execution.stage.name}}</h3>
+              <span class="stage-status" [ngClass]="execution.status">
+                {{execution.status}}
+              </span>
+            </div>
+            <div class="executor-details" *ngFor="let executor of execution.executors">
+              <div class="executor-card">
+                <div class="executor-header">
+                  <i class="pi pi-user"></i>
+                  <span class="executor-name">
+                    {{executor.actor.name}} {{executor.actor.lastName}}
+                  </span>
+                </div>
+                <div class="executor-info">
+                  <div class="info-item">
+                    <label>Teléfono</label>
+                    <p>{{executor.actor.phoneNumber}}</p>
+                  </div>
+                  <div class="info-item">
+                    <label>Asignado el</label>
+                    <p>{{executor.assignedAt | date:'medium'}}</p>
+                  </div>
+                  <div class="info-item">
+                    <label>Etapa Ejecutada</label>
+                    <p>{{execution.stage.description}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Etapas del Mantenimiento -->
       <div class="stages-section">
-        <h2>Stages</h2>
+        <h2><i class="pi pi-list"></i> Etapas del Proceso</h2>
         <div class="stages-list">
-          <div class="stage-item" *ngFor="let stage of stages">
+          <div class="stage-item" *ngFor="let stage of stages; let i = index">
+            <div class="stage-number">{{i + 1}}</div>
             <div class="stage-info">
               <h3>{{stage.name}}</h3>
               <p>{{stage.description}}</p>
             </div>
-            <button class="update-btn" (click)="updateStageAndStatus(stage.id, 'in_progress')">
-              Move to this stage
-            </button>
+            <div class="stage-actions">
+              <!-- Input para el archivo -->
+              <div class="file-upload" *ngIf="selectedStage === stage.id">
+                <label for="formFile" class="file-label">Formulario completado</label>
+                <input
+                  type="file"
+                  id="formFile"
+                  class="file-input"
+                  (change)="onFileSelected($event)"
+                  accept=".pdf,.doc,.docx,.xlsx">
+              </div>
+              <!-- Botón de actualizar -->
+              <button class="update-btn" (click)="selectStage(stage.id)">
+                <i class="pi pi-arrow-right"></i>
+                Mover a esta etapa
+              </button>
+            </div>
           </div>
         </div>
       </div>
