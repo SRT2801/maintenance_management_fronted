@@ -11,7 +11,7 @@ export class UsersComponent {
   actors: IActor[] = [];
   totalRecords: number = 0;
   currentPage: number = 0;
-  rows: number = 10;
+  rows: number = 5;
 
   searchText: string = '';
 
