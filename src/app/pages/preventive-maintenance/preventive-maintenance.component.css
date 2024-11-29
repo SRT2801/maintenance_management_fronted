@@ -179,6 +179,21 @@ h2 {
   color: #92400e;
 }
 
+.status-badge.in_progress {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.status-badge.assigned {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
 .clickable {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -187,6 +202,40 @@ h2 {
 .clickable:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dates-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 1rem;
+}
+
+.date-info {
+  flex: 1;
+}
+
+.date-info label {
+  color: #64748b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.date-info p {
+  color: #1e293b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.info-group small {
+  color: #64748b;
+  font-size: 0.75rem;
+  display: block;
+  margin-top: 0.25rem;
 }
 
 @media (max-width: 768px) {

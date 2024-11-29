@@ -8,13 +8,19 @@ interface IPreventiveMaintenance {
   name: string;
   description: string;
   createdAt: string;
+  updatedAt: string;
   status: string;
   deptMaintTypeAssignment: {
     id: number;
+    status: string;
+    priority: number;
+    comments: string;
     department: {
       id: number;
       name: string;
       description: string;
+      phoneNumber: string;
+      status: string;
     };
     maintenanceType: {
       id: number;
@@ -22,6 +28,40 @@ interface IPreventiveMaintenance {
       description: string;
     };
   };
+  executions: Array<{
+    id: number;
+    status: string;
+    description: string | null;
+    startedAt: string;
+    updatedAt: string;
+    endedAt: string | null;
+    stage: {
+      id: number;
+      name: string;
+      description: string;
+      order: number;
+      createdAt: string;
+      updatedAt: string;
+    };
+    executors: Array<{
+      id: number;
+      assignedAt: string;
+      updatedAt: string;
+      status: string;
+      comments: string | null;
+      actor: {
+        id: number;
+        name: string;
+        lastName: string;
+        phoneNumber: string;
+        documentNumber: number;
+        documentType: string;
+        createdAt: string;
+        updatedAt: string;
+        status: string;
+      };
+    }>;
+  }>;
 }
 
 @Component({
